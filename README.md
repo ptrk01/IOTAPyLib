@@ -1,3 +1,5 @@
+![IOTA Logo](http://fs5.directupload.net/images/170402/8d5xdkkb.png)
+
 # IOTAPyLib
 
 IOTAPyLib is an easy to use wrapper for IOTA API written in Python. It is lightweight and offers all basic functionality of IOTA.
