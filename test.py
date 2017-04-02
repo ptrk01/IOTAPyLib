@@ -2,12 +2,9 @@
 Simple helper to test all functions of IOTA's API.
 Just uncomment the part to be tested and execute the script.
 """
-
 import iotawrapper
  
 iota = iotawrapper.Api("http://eugene.iota.community:14265/")
-
-
 
 #===============================================================================
 # node = iota.getNodeInfo()
