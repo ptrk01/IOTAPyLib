@@ -80,14 +80,14 @@ class StoreTransactions:
     
         Methods:
             duration: Duration of request.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     jsonData = ""
     def __init__(self, url, trytesList):
         command = {'command': 'storeTransactions', 'trytes': [', '.join('{0}'.format(w) for w in trytesList)] if len(trytesList) > 0 else []}
-        print command
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -98,7 +98,7 @@ class StoreTransactions:
     def duration(self):
         return self.jsonData["duration"]
 
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 class BroadcastTransactions:
@@ -110,13 +110,14 @@ class BroadcastTransactions:
     
         Methods:
             duration: Duration of request.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     jsonData = ""
     def __init__(self, url, trytesList):
         command = {'command': 'broadcastTransactions', 'trytes': [', '.join('{0}'.format(w) for w in trytesList)] if len(trytesList) > 0 else []}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -127,7 +128,7 @@ class BroadcastTransactions:
     def duration(self):
         return self.jsonData["duration"]
 
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 class InterruptAttachingToTangle:
@@ -137,13 +138,14 @@ class InterruptAttachingToTangle:
             url (str): URL of node sever including port
     
         Methods:
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     jsonData = ""
     def __init__(self, url):
         command = {'command': 'interruptAttachingToTangle'}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -151,7 +153,7 @@ class InterruptAttachingToTangle:
         except urllib2.HTTPError, e:
             sys.exit("%s in class: %s" % (str(e), self.__class__.__name__))
 
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 class AttachToTangle:
@@ -169,13 +171,14 @@ class AttachToTangle:
     
         Methods:
             trytes: List of added trytes.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     jsonData = ""
     def __init__(self, url, trunkTransaction, branchTransaction, minWeightMagnitude, trytesList):
         command = {'command': 'attachToTangle', 'trunkTransaction': trunkTransaction, 'branchTransaction': branchTransaction, 'minWeightMagnitude': minWeightMagnitude, 'trytes': [', '.join('{0}'.format(w) for w in trytesList)] if len(trytesList) > 0 else []}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -186,7 +189,7 @@ class AttachToTangle:
     def trytes(self):
         return self.jsonData["trytes"]
 
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 
@@ -202,14 +205,15 @@ class GetTransactionsToApprove:
             trunkTransaction : The transaction of the trunk.
             branchTransaction: The transaction of the branch.
             duration: Duration of request.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     
     jsonData = ""
     def __init__(self, url, depth):
         command = {'command': 'getTransactionsToApprove', 'depth': depth}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -226,7 +230,7 @@ class GetTransactionsToApprove:
     def duration(self):
         return self.jsonData["duration"]
     
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 
@@ -242,15 +246,16 @@ class GetBalance:
     
         Methods:
             balances : List of balances.
-            milestone: Milestone hash.
+            references: The referencing tips.
             milestoneIndex: Index number of milestone.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     jsonData = ""
     def __init__(self, url, addressesList, threshold):
         command = {'command': 'getBalances', 'addresses': [', '.join('{0}'.format(w) for w in addressesList)] if len(addressesList) > 0 else [], 'threshold' : threshold}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -261,13 +266,16 @@ class GetBalance:
     def balances(self):
         return self.jsonData["balances"]
     
-    def milestone(self):
-        return self.jsonData["milestone"]
+    def references(self):
+        return self.jsonData["references"]
     
     def milestoneIndex(self):
         return self.jsonData["milestoneIndex"]
     
-    def printJsonResponse(self):
+    def duration(self):
+        return self.jsonData["duration"]
+    
+    def jsonResponse(self):
         return self.jsonData
 
 
@@ -284,14 +292,14 @@ class GetInclusionStates:
         Methods:
             states : Number of states.
             duration: Duration of request.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     jsonData = ""
     def __init__(self, url, transactionsList, tipsList):
         command = {'command': 'getInclusionStates', 'transactions': [', '.join('{0}'.format(w) for w in transactionsList)] if len(transactionsList) > 0 else [], 'tips': [', '.join('{0}'.format(w) for w in tipsList)] if len(tipsList) > 0 else []}
-        print command
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -305,7 +313,7 @@ class GetInclusionStates:
     def duration(self):
         return self.jsonData["duration"]
     
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 
@@ -318,14 +326,15 @@ class GetTrytes:
     
         Methods:
             trytes : List of trytes.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     
     jsonData = ""
     def __init__(self, url, hashesList):
         command = {'command': 'getTrytes', 'hashes': [', '.join('{0}'.format(w) for w in hashesList)] if len(hashesList) > 0 else []}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -336,7 +345,7 @@ class GetTrytes:
     def trytes(self):
         return self.jsonData["trytes"]
     
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
         
 class FindTransactions:
@@ -352,13 +361,14 @@ class FindTransactions:
         Methods:
             hashes: List of hashes.
             duration: Duration of request.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     jsonData = ""
     def __init__(self, url, addressesList):
         command = {'command': 'findTransactions', 'addresses': [', '.join('{0}'.format(w) for w in addressesList)] if len(addressesList) > 0 else []}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -372,7 +382,7 @@ class FindTransactions:
     def duration(self):
         return self.jsonData["duration"]
     
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 class GetNeighbors:
@@ -386,14 +396,15 @@ class GetNeighbors:
             numberOfAllTransactions: Number of all transactions sent (invalid, valid, already-seen)
             numberOfInvalidTransactions: Invalid transactions your peer has sent you. These are transactions with invalid signatures or overall schema.
             numberOfNewTransactions: New transactions which were transmitted.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     
     jsonData = ""
     def __init__(self, url):
         command = {'command': 'getNeighbors'}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -413,7 +424,7 @@ class GetNeighbors:
     def numberOfNewTransactions(self):
         return self.jsonData["numberOfNewTransactions"]
     
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
     
 class AddNeighbors:
@@ -427,13 +438,14 @@ class AddNeighbors:
         Methods:
             addedNeighbors: List of added neighbor URI elements.
             duration: Duration of request.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     jsonData = ""
     def __init__(self, url, neighborsList):
         command = {'command': 'addNeighbors', 'uris': [', '.join("'{0}'".format(w) for w in neighborsList)] if len(neighborsList) > 0 else []}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -447,7 +459,7 @@ class AddNeighbors:
     def duration(self):
         return self.jsonData["duration"]
 
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 
@@ -462,14 +474,15 @@ class RemoveNeighbors:
         Methods:
             removeNeighbors: List of removed neighbor URIs elements.
             duration: Duration of request.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     
     jsonData = ""
     def __init__(self, url, neighborsList):
         command = {'command': 'removeNeighbors', 'uris': [', '.join('{0}'.format(w) for w in neighborsList)] if len(neighborsList) > 0 else []}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -483,7 +496,7 @@ class RemoveNeighbors:
     def duration(self):
         return self.jsonData["duration"]
 
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 
@@ -496,13 +509,14 @@ class GetTips:
         Methods:
             hashes: List of tips hashes.
             duration: Duration of request.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
     """
     jsonData = ""
     def __init__(self, url):
         command = {'command': 'getTips'}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -516,7 +530,7 @@ class GetTips:
     def duration(self):
         return self.jsonData["duration"]
 
-    def printJsonResponse(self):
+    def jsonResponse(self):
         return self.jsonData
 
 
@@ -539,16 +553,21 @@ class NodeInfo:
             latestSolidSubtangleMilestoneIndex: Index of the latest solid subtangle.
             neighbors: Number of neighbors you are directly connected with.
             packetsQueueSize: Packets which are currently queued up.
+            milestoneStartIndex: Entrypoint milestone for the current version of the IRI
             time: Current UNIX timestamp.
             tips: Number of tips in the network.
             transactionsToRequest: Transactions to request during syncing process.
-            printJsonResponse: Print the complete JSON response.
+            jsonResponse: Return the complete JSON response.
+            features: Enabled commands
+            coordinatorAddress: Address of the Coordinator
+            duration: Number of milliseconds it took to complete the request
     """
     jsonData = ""
     def __init__(self, url):
         command = {'command': 'getNodeInfo'}
         stringified = json.dumps(command)
-        headers = {'content-type': 'application/json'}
+        stringified = stringified.encode('utf-8')
+        headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}
         request = urllib2.Request(url=url, data=stringified, headers=headers)
         try:
             returnData = urllib2.urlopen(request).read()
@@ -585,6 +604,10 @@ class NodeInfo:
 
     def latestSolidSubtangleMilestone(self):
         return self.jsonData["latestSolidSubtangleMilestone"]
+    
+    def milestoneStartIndex(self):
+        return self.jsonData["milestoneStartIndex"]
+
 
     def latestSolidSubtangleMilestoneIndex(self):
         return self.jsonData["latestSolidSubtangleMilestoneIndex"]
@@ -601,5 +624,17 @@ class NodeInfo:
     def transactionsToRequest(self):
         return self.jsonData["transactionsToRequest"]
     
-    def printJsonResponse(self):
+    def coordinatorAddress(self):
+        return self.jsonData["coordinatorAddress"]
+    
+    def features(self):
+        return self.jsonData["features"]
+    
+    def transactionsToRequest(self):
+        return self.jsonData["transactionsToRequest"]
+    
+    def duration(self):
+        return self.jsonData["duration"]
+    
+    def jsonResponse(self):
         return self.jsonData
