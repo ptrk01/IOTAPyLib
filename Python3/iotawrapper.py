@@ -25,7 +25,7 @@ import sys
 
 class Api:
     """ This class acts as an intermediary and invoker for all classes. """
-    url = ""
+    
     def __init__(self, url):
         self.url = url
 
@@ -85,7 +85,7 @@ class StoreTransactions:
     
     def __init__(self, url, trytesList):
         command = {'command': 'storeTransactions', 'trytes': [', '.join('{0}'.format(w) for w in trytesList)] if len(trytesList) > 0 else []}
-        print (command)
+        
         stringified = json.dumps(command)
         stringified = stringified.encode('utf-8')
         headers = {'content-type': 'application/json', 'X-IOTA-API-Version': '1'}

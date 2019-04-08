@@ -24,7 +24,7 @@ import sys
 
 class Api:
     """ This class acts as an intermediary and invoker for all classes. """
-    url = ""
+    
     def __init__(self, url):
         self.url = url
 
@@ -82,7 +82,7 @@ class StoreTransactions:
             duration: Duration of request.
             jsonResponse: Return the complete JSON response.
     """
-    jsonData = ""
+    
     def __init__(self, url, trytesList):
         command = {'command': 'storeTransactions', 'trytes': [', '.join('{0}'.format(w) for w in trytesList)] if len(trytesList) > 0 else []}
         stringified = json.dumps(command)
@@ -112,7 +112,7 @@ class BroadcastTransactions:
             duration: Duration of request.
             jsonResponse: Return the complete JSON response.
     """
-    jsonData = ""
+    
     def __init__(self, url, trytesList):
         command = {'command': 'broadcastTransactions', 'trytes': [', '.join('{0}'.format(w) for w in trytesList)] if len(trytesList) > 0 else []}
         stringified = json.dumps(command)
@@ -140,7 +140,7 @@ class InterruptAttachingToTangle:
         Methods:
             jsonResponse: Return the complete JSON response.
     """
-    jsonData = ""
+    
     def __init__(self, url):
         command = {'command': 'interruptAttachingToTangle'}
         stringified = json.dumps(command)
@@ -173,7 +173,7 @@ class AttachToTangle:
             trytes: List of added trytes.
             jsonResponse: Return the complete JSON response.
     """
-    jsonData = ""
+    
     def __init__(self, url, trunkTransaction, branchTransaction, minWeightMagnitude, trytesList):
         command = {'command': 'attachToTangle', 'trunkTransaction': trunkTransaction, 'branchTransaction': branchTransaction, 'minWeightMagnitude': minWeightMagnitude, 'trytes': [', '.join('{0}'.format(w) for w in trytesList)] if len(trytesList) > 0 else []}
         stringified = json.dumps(command)
@@ -208,7 +208,7 @@ class GetTransactionsToApprove:
             jsonResponse: Return the complete JSON response.
     """
     
-    jsonData = ""
+    
     def __init__(self, url, depth):
         command = {'command': 'getTransactionsToApprove', 'depth': depth}
         stringified = json.dumps(command)
@@ -250,7 +250,7 @@ class GetBalance:
             milestoneIndex: Index number of milestone.
             jsonResponse: Return the complete JSON response.
     """
-    jsonData = ""
+    
     def __init__(self, url, addressesList, threshold):
         command = {'command': 'getBalances', 'addresses': [', '.join('{0}'.format(w) for w in addressesList)] if len(addressesList) > 0 else [], 'threshold' : threshold}
         stringified = json.dumps(command)
@@ -294,7 +294,7 @@ class GetInclusionStates:
             duration: Duration of request.
             jsonResponse: Return the complete JSON response.
     """
-    jsonData = ""
+    
     def __init__(self, url, transactionsList, tipsList):
         command = {'command': 'getInclusionStates', 'transactions': [', '.join('{0}'.format(w) for w in transactionsList)] if len(transactionsList) > 0 else [], 'tips': [', '.join('{0}'.format(w) for w in tipsList)] if len(tipsList) > 0 else []}
         stringified = json.dumps(command)
@@ -329,7 +329,7 @@ class GetTrytes:
             jsonResponse: Return the complete JSON response.
     """
     
-    jsonData = ""
+    
     def __init__(self, url, hashesList):
         command = {'command': 'getTrytes', 'hashes': [', '.join('{0}'.format(w) for w in hashesList)] if len(hashesList) > 0 else []}
         stringified = json.dumps(command)
@@ -363,7 +363,7 @@ class FindTransactions:
             duration: Duration of request.
             jsonResponse: Return the complete JSON response.
     """
-    jsonData = ""
+    
     def __init__(self, url, addressesList):
         command = {'command': 'findTransactions', 'addresses': [', '.join('{0}'.format(w) for w in addressesList)] if len(addressesList) > 0 else []}
         stringified = json.dumps(command)
@@ -399,7 +399,7 @@ class GetNeighbors:
             jsonResponse: Return the complete JSON response.
     """
     
-    jsonData = ""
+    
     def __init__(self, url):
         command = {'command': 'getNeighbors'}
         stringified = json.dumps(command)
@@ -440,7 +440,7 @@ class AddNeighbors:
             duration: Duration of request.
             jsonResponse: Return the complete JSON response.
     """
-    jsonData = ""
+    
     def __init__(self, url, neighborsList):
         command = {'command': 'addNeighbors', 'uris': [', '.join("'{0}'".format(w) for w in neighborsList)] if len(neighborsList) > 0 else []}
         stringified = json.dumps(command)
@@ -477,7 +477,7 @@ class RemoveNeighbors:
             jsonResponse: Return the complete JSON response.
     """
     
-    jsonData = ""
+    
     def __init__(self, url, neighborsList):
         command = {'command': 'removeNeighbors', 'uris': [', '.join('{0}'.format(w) for w in neighborsList)] if len(neighborsList) > 0 else []}
         stringified = json.dumps(command)
@@ -511,7 +511,7 @@ class GetTips:
             duration: Duration of request.
             jsonResponse: Return the complete JSON response.
     """
-    jsonData = ""
+    
     def __init__(self, url):
         command = {'command': 'getTips'}
         stringified = json.dumps(command)
@@ -562,7 +562,7 @@ class NodeInfo:
             coordinatorAddress: Address of the Coordinator
             duration: Number of milliseconds it took to complete the request
     """
-    jsonData = ""
+    
     def __init__(self, url):
         command = {'command': 'getNodeInfo'}
         stringified = json.dumps(command)
